@@ -1,9 +1,9 @@
 import { Text, View } from 'react-native'
 
-export default function Home () {
+export default function AddTraining () {
   return (
     <View>
-      <Text>TESTEEEE INDEX</Text>
+      <Text>ADD TRAINING</Text>
     </View>
   )
 }
