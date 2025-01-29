@@ -1,11 +1,6 @@
 import { useSQLiteContext } from 'expo-sqlite'
 import { useState } from 'react'
-
-export type TrainingType = {
-  id: number
-  name: string
-  description?: string | null
-}
+import { TrainingType } from '../types'
 
 /**
  * Hook used to list all existing training types.

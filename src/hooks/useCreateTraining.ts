@@ -1,6 +1,6 @@
 import { useSQLiteContext } from 'expo-sqlite'
 import { useState } from 'react'
-import { Exercise } from '../types/Exercise'
+import { Exercise } from '../types'
 
 export type useCreateTrainingParams = {
   name: string

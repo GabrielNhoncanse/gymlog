@@ -2,7 +2,7 @@ import { Formik } from 'formik'
 import { StyleSheet, Text, View } from 'react-native'
 import * as yup from 'yup'
 import { Button, Modal, Portal, TextInput } from 'react-native-paper'
-import { Exercise } from '../types/Exercise'
+import { Exercise } from '../types'
 
 const validationSchema = yup.object().shape({
   name: yup.string().required('Name is a required field'),
@@ -58,9 +58,6 @@ export function CreateTrainingForm (props: createTrainingFormProps) {
               {errors.note && <Text>{errors.note}</Text>}
 
               <View style={styles.buttonsContainer}>
-                <Button onPress={() => handleSubmit()}>
-                  Create
-                </Button>
                 <Button
                   mode='text'
                   onPress={() => {
@@ -69,6 +66,9 @@ export function CreateTrainingForm (props: createTrainingFormProps) {
                   }}
                 >
                   Cancel
+                </Button>
+                <Button onPress={() => handleSubmit()}>
+                  Create
                 </Button>
               </View>
             </View>
