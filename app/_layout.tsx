@@ -4,10 +4,11 @@ import { SQLiteProvider } from 'expo-sqlite'
 import { initDatabase } from '../src/database/initDatabase'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { PaperProvider } from 'react-native-paper'
+import { theme } from '../src/theme/theme'
 
 export default function Layout () {
   return (
-    <PaperProvider>
+    <PaperProvider theme={theme}>
       <SQLiteProvider databaseName='sqlite.db' onInit={initDatabase}>
         <Tabs>
           <Tabs.Screen name='training-types' options={{
