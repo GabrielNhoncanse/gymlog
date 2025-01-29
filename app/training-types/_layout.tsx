@@ -7,7 +7,7 @@ export default function Layout () {
         headerShown: false
       }} />
       <Stack.Screen name='create-type/index' options={{
-        title: 'Add new taining type'
+        title: 'Add new training type'
       }} />
     </Stack>
   )

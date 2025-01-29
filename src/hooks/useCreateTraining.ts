@@ -1,14 +1,17 @@
 import { useSQLiteContext } from 'expo-sqlite'
 import { useState } from 'react'
+import { Exercise } from '../types/Exercise'
 
 export type useCreateTrainingParams = {
   name: string
   description?: string | null
+  exercises: Exercise[]
 }
 
 /**
  * Hook used to insert a new training type into 'training_types' table.
- * @param params - Object containing the name and description.
+ * Includes inserting related exercises.
+ * @param params - Object containing the name, description and exercises.
  * @returns The id of the new training, loading status, and error.
  */
 export function useCreateTraining () {
@@ -17,7 +20,7 @@ export function useCreateTraining () {
   const db = useSQLiteContext()
 
   const createTraining = async (params: useCreateTrainingParams): Promise<{ id: number } | void> => {
-    const { name, description } = params
+    const { name, description, exercises } = params
 
     if (!db) {
       setError(new Error('An error occurred while getting the database.'))
@@ -25,21 +28,47 @@ export function useCreateTraining () {
     }
 
     setLoading(true)
-    const query = await db.prepareAsync(`
+    const insertTrainingQuery = await db.prepareAsync(`
       INSERT INTO training_types (name, description) VALUES ($name, $description);
     `)
 
     try {
-      const response = await query.executeAsync({
+      // Starts transaction
+      await db.execAsync('BEGIN TRANSACTION')
+
+      // Insert new training type
+      const { lastInsertRowId: newTrainingId } = await insertTrainingQuery.executeAsync({
         $name: name,
         $description: description ?? null
       })
-      const id = response.lastInsertRowId
-      return { id }
+
+      for (const exercise of exercises) {
+        const insertExerciseQuery = await db.prepareAsync(`
+          INSERT INTO exercises (training_type_id, name, sets, note)
+          VALUES ($trainingId, $name, $sets, $note);
+        `)
+
+        await insertExerciseQuery.executeAsync({
+          $trainingId: newTrainingId,
+          $name: exercise.name,
+          $sets: exercise.sets,
+          $note: exercise.note ?? null
+        })
+
+        await insertExerciseQuery.finalizeAsync()
+
+        // Commit transaction
+        await db.execAsync('COMMIT')
+      }
+
+      return { id: newTrainingId }
     } catch (error) {
       setError(error as Error)
+
+      // Rollback transaction on error
+      await db.execAsync('ROLLBACK')
     } finally {
-      await query.finalizeAsync()
+      await insertTrainingQuery.finalizeAsync()
       setLoading(false)
     }
   }

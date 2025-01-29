@@ -15,7 +15,7 @@ export async function initDatabase (db: SQLiteDatabase) {
       training_type_id INTEGER NOT NULL,
       name TEXT NOT NULL,
       sets INTEGER NOT NULL,
-      notes TEXT,
+      note TEXT,
       FOREIGN KEY (training_type_id) REFERENCES training_types(id) ON DELETE CASCADE
     );
   `)
@@ -38,7 +38,7 @@ export async function initDatabase (db: SQLiteDatabase) {
       load REAL NOT NULL,
       repetitions INTEGER NOT NULL,
       rir INTEGER, -- Reps in Reserve
-      notes TEXT,
+      note TEXT,
       FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE CASCADE,
       FOREIGN KEY (exercise_id) REFERENCES exercises(id) ON DELETE CASCADE
     );

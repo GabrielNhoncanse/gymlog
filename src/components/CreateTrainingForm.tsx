@@ -1,8 +1,8 @@
 import { Formik } from 'formik'
 import { StyleSheet, Text, View } from 'react-native'
 import * as yup from 'yup'
-import { Exercise } from '../../app/training-types/create-type'
 import { Button, Modal, Portal, TextInput } from 'react-native-paper'
+import { Exercise } from '../types/Exercise'
 
 const validationSchema = yup.object().shape({
   name: yup.string().required('Name is a required field'),
