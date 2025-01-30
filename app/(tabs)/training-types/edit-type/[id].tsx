@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
 import { useGetTrainingById, GetTrainingByIdResult } from '../../../../src/hooks'
-import { ExerciseListCard } from '../../../../src/components'
+import { ExercisesTable } from '../../../../src/components'
 
 export default function EditType () {
   const { id } = useLocalSearchParams()
@@ -33,18 +33,7 @@ export default function EditType () {
       <View style={{ padding: 16 }}>
         <Text variant='titleLarge'>Exercises</Text>
 
-        <View style={{ flexDirection: 'row', paddingVertical: 20 }}>
-          <Text style={{ flex: 3, fontWeight: 'bold' }}>Name</Text>
-          <Text style={{ flex: 1, textAlign: 'right', fontWeight: 'bold' }}>Sets</Text>
-          <Text style={{ flex: 1, textAlign: 'right', fontWeight: 'bold' }}>Note</Text>
-        </View>
-
-        {trainingData?.exercises.length === 0 && (
-          <Text>No exercises found</Text>
-        )}
-        {trainingData?.exercises.map((exercise, index) => (
-          <ExerciseListCard key={`exercise-${index}`} exercise={exercise} />
-        ))}
+        <ExercisesTable exercises={trainingData?.exercises ?? []} />
       </View>
     </View>
   )
