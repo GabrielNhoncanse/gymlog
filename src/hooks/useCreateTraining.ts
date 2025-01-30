@@ -56,10 +56,9 @@ export function useCreateTraining () {
         })
 
         await insertExerciseQuery.finalizeAsync()
-
-        // Commit transaction
-        await db.execAsync('COMMIT')
       }
+      // Commit transaction
+      await db.execAsync('COMMIT')
 
       return { id: newTrainingId }
     } catch (error) {
