@@ -9,6 +9,9 @@ export default function Layout () {
       <Stack.Screen name='create-type/index' options={{
         title: 'New training type'
       }} />
+      <Stack.Screen name='edit-type/[id]' options={{
+        title: 'Edit training type'
+      }} />
     </Stack>
   )
 }
