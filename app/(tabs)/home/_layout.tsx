@@ -6,6 +6,9 @@ export default function Layout () {
       <Stack.Screen name='index' options={{
         headerShown: false
       }} />
+      <Stack.Screen name='start-session/index' options={{
+        headerShown: false
+      }} />
     </Stack>
   )
 }
