@@ -1,10 +1,11 @@
-import { Button, Text } from 'react-native-paper'
+import { Button } from 'react-native-paper'
 import { Ionicons } from '@expo/vector-icons'
 import { router, useFocusEffect } from 'expo-router'
 import { FlatList, View, StyleSheet } from 'react-native'
 import { useCallback, useState } from 'react'
 import { useListTrainings } from '../../src/hooks'
 import { TrainingType } from '../../src/types'
+import { TrainingTypeCard } from '../../src/components'
 
 export default function TrainingTypes () {
   const { listTrainings } = useListTrainings()
@@ -29,7 +30,12 @@ export default function TrainingTypes () {
 
       <FlatList
         data={trainingTypes}
-        renderItem={({ item }) => <Text>{item.name}</Text>}
+        keyExtractor={(item) => item.id.toString()}
+        numColumns={2}
+        columnWrapperStyle={styles.typesContainer}
+        renderItem={({ item }) => (
+          <TrainingTypeCard key={item.id} training={item} />
+        )}
       />
     </View>
   )
@@ -40,5 +46,11 @@ const styles = StyleSheet.create({
     flex: 3,
     gap: 10,
     padding: 10
+  },
+  typesContainer: {
+    width: '100%',
+    height: 100,
+    marginVertical: 20,
+    justifyContent: 'space-around'
   }
 })
