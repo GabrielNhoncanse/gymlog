@@ -10,12 +10,12 @@ const validationSchema = yup.object().shape({
   note: yup.string().nullable()
 })
 
-type createTrainingFormProps = {
+type createExerciseFormProps = {
   onClose: () => void
   onSubmit: (exercise: Exercise) => void
 }
 
-export function CreateTrainingForm (props: createTrainingFormProps) {
+export function CreateExerciseForm (props: createExerciseFormProps) {
   const { onClose, onSubmit } = props
 
   return (
