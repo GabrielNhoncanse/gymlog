@@ -33,6 +33,7 @@ export function CreateTrainingForm (props: createTrainingFormProps) {
           {({ handleChange, handleSubmit, resetForm, values, errors }) => (
             <View>
               <TextInput
+                style={styles.input}
                 mode='outlined'
                 label='Name'
                 value={values.name}
@@ -41,6 +42,7 @@ export function CreateTrainingForm (props: createTrainingFormProps) {
               {errors.name && <Text>{errors.name}</Text>}
 
               <TextInput
+                style={styles.input}
                 mode='outlined'
                 label='Number of sets'
                 value={values.sets.toString()}
@@ -50,6 +52,7 @@ export function CreateTrainingForm (props: createTrainingFormProps) {
               {errors.sets && <Text>{errors.sets}</Text>}
 
               <TextInput
+                style={styles.input}
                 mode='outlined'
                 label='Note (optional)'
                 value={values.note ?? ''}
@@ -59,15 +62,17 @@ export function CreateTrainingForm (props: createTrainingFormProps) {
 
               <View style={styles.buttonsContainer}>
                 <Button
-                  mode='text'
                   onPress={() => {
                     resetForm()
                     onClose()
                   }}
+                  textColor='#e67d7a'
                 >
                   Cancel
                 </Button>
-                <Button onPress={() => handleSubmit()}>
+                <Button
+                  onPress={() => handleSubmit()}
+                >
                   Create
                 </Button>
               </View>
@@ -88,7 +93,11 @@ const styles = StyleSheet.create({
   formContainer: {
     backgroundColor: 'white',
     padding: 20,
-    margin: 20
+    margin: 20,
+    borderRadius: 10
+  },
+  input: {
+    backgroundColor: 'transparent'
   }
 })
 
