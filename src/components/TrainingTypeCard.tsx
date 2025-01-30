@@ -1,18 +1,19 @@
-import { StyleSheet, View } from 'react-native'
+import { Pressable, StyleSheet } from 'react-native'
 import { TrainingType } from '../types'
 import { Text } from 'react-native-paper'
+import { router } from 'expo-router'
 
 type TrainingTypeCardProps = {
   training: TrainingType
 }
 
 export function TrainingTypeCard (props: TrainingTypeCardProps) {
-  const { name } = props.training
+  const { id, name } = props.training
 
   return (
-    <View style={styles.container}>
+    <Pressable style={styles.container} onPress={() => router.push(`/training-types/edit-type/${id}`)}>
       <Text>{name}</Text>
-    </View>
+    </Pressable>
   )
 }
 
