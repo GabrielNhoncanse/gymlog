@@ -1,28 +1,23 @@
-import { Tabs } from 'expo-router'
-import { Ionicons } from '@expo/vector-icons'
+import { Stack } from 'expo-router'
 import { SQLiteProvider } from 'expo-sqlite'
-import { initDatabase } from '../src/database/initDatabase'
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { PaperProvider } from 'react-native-paper'
 import { theme } from '../src/theme/theme'
+import { initDatabase } from '../src/database/initDatabase'
+
 
 export default function Layout () {
   return (
     <PaperProvider theme={theme}>
       <SQLiteProvider databaseName='sqlite.db' onInit={initDatabase}>
-        <Tabs>
-          <Tabs.Screen name='training-types' options={{
-            headerShown: false,
-            tabBarLabel: 'Training Types',
-            tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="dumbbell" size={size} color={color} />
+        <Stack>
+          <Stack.Screen name='index' options={{
+            headerShown: false
           }} />
-          <Tabs.Screen name='index' options={{
-            headerShown: false,
-            tabBarLabel: 'Home',
-            tabBarIcon: ({ color, size }) => <Ionicons name='home' color={color} size={size} />
+          <Stack.Screen name='(tabs)' options={{
+            headerShown: false
           }} />
-        </Tabs>
+        </Stack>
       </SQLiteProvider>
-    </PaperProvider>
+    </PaperProvider >
   )
 }

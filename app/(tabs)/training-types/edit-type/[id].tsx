@@ -2,8 +2,8 @@ import { useFocusEffect, useLocalSearchParams } from 'expo-router'
 import { useCallback, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
-import { useGetTrainingById, GetTrainingByIdResult } from '../../../src/hooks'
-import { ExerciseListCard } from '../../../src/components'
+import { useGetTrainingById, GetTrainingByIdResult } from '../../../../src/hooks'
+import { ExerciseListCard } from '../../../../src/components'
 
 export default function EditType () {
   const { id } = useLocalSearchParams()

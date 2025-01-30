@@ -1,9 +1,9 @@
 import { GestureResponderEvent, StyleSheet, View } from 'react-native'
-import { useCreateTraining } from '../../../src/hooks'
+import { useCreateTraining } from '../../../../src/hooks'
 import { useState } from 'react'
-import { CreateExerciseForm, ExerciseListCard } from '../../../src/components'
+import { CreateExerciseForm, ExerciseListCard } from '../../../../src/components'
 import { Button, Text, TextInput } from 'react-native-paper'
-import { Exercise } from '../../../src/types'
+import { Exercise } from '../../../../src/types'
 import { router } from 'expo-router'
 
 export default function CreateType () {

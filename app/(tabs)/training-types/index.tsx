@@ -3,9 +3,9 @@ import { Ionicons } from '@expo/vector-icons'
 import { router, useFocusEffect } from 'expo-router'
 import { FlatList, View, StyleSheet } from 'react-native'
 import { useCallback, useState } from 'react'
-import { useListTrainings } from '../../src/hooks'
-import { TrainingType } from '../../src/types'
-import { TrainingTypeCard } from '../../src/components'
+import { useListTrainings } from '../../../src/hooks'
+import { TrainingType } from '../../../src/types'
+import { TrainingTypeCard } from '../../../src/components'
 
 export default function TrainingTypes () {
   const { listTrainings } = useListTrainings()
