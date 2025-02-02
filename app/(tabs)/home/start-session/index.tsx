@@ -1,17 +1,18 @@
 import { View } from 'react-native'
-import { Text } from 'react-native-paper'
 import { Picker } from '@react-native-picker/picker'
-import { useCallback, useEffect, useState } from 'react'
-import { GetTrainingByIdResult, useGetTrainingById, useListTrainings } from '../../../../src/hooks'
-import { Exercise, TrainingType } from '../../../../src/types'
+import { useCallback, useState } from 'react'
+import { GetTrainingDataByIdResult, useAddSession, useGetTrainingDataById, useListTrainings } from '../../../../src/hooks'
+import { TrainingType } from '../../../../src/types'
 import { useFocusEffect } from 'expo-router'
 import { ExercisesTable } from '../../../../src/components'
 
 export default function StartSession () {
   const [trainingTypes, setTrainingTypes] = useState<TrainingType[]>([])
-  const [exercises, setExercises] = useState<Exercise[]>([])
+  const [selectedTrainingData, setSelectedTrainingData] = useState<GetTrainingDataByIdResult | null>(null)
+  const [sessionId, setSessionId] = useState<number | null>(null)
   const { listTrainings } = useListTrainings()
-  const { getTrainingById } = useGetTrainingById()
+  const { getTrainingDataById } = useGetTrainingDataById()
+  const { addSession } = useAddSession()
 
   useFocusEffect(
     useCallback(() => {
@@ -22,22 +23,30 @@ export default function StartSession () {
       list()
     }, []))
 
-  const handleTrainingSelected = async (trainingId: number) => {
-    const trainingData = await getTrainingById(trainingId!) as GetTrainingByIdResult
-    setExercises(trainingData.exercises)
+  const handleTrainingSelected = async (trainingTypeId: number | null) => {
+    if (!trainingTypeId) return
+    const { id: newSessionId } = await addSession({ trainingTypeId }) as { id: number } //TO-DO: improve return
+    setSessionId(newSessionId)
+
+    const trainingData = await getTrainingDataById(trainingTypeId!) as GetTrainingDataByIdResult
+    setSelectedTrainingData(trainingData)
   }
 
   return (
     <View style={{ padding: 20 }}>
       <Picker
-        onValueChange={(selectedId: number) => handleTrainingSelected(selectedId)}>
+        selectedValue={selectedTrainingData?.training.id}
+        enabled={!sessionId}
+        onValueChange={(selectedId: number | null) => handleTrainingSelected(selectedId)}
+      >
+        <Picker.Item label={'Select a training type'} value={null} />
         {trainingTypes?.map((training) => (
           <Picker.Item key={training.id} label={training.name} value={training.id} />
         ))}
       </Picker>
 
-      {exercises.length !== 0 && (
-        <ExercisesTable exercises={exercises} />
+      {selectedTrainingData?.exercises && selectedTrainingData.exercises.length > 0 && (
+        <ExercisesTable exercises={selectedTrainingData.exercises} />
       )}
     </View>
   )
