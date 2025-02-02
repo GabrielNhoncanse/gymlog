@@ -2,7 +2,7 @@ import { useSQLiteContext } from 'expo-sqlite'
 import { useState } from 'react'
 import { Exercise } from '../types'
 
-export type useCreateTrainingParams = {
+export type CreateTrainingParams = {
   name: string
   description?: string | null
   exercises: Exercise[]
@@ -19,7 +19,7 @@ export function useCreateTraining () {
   const [error, setError] = useState<Error | null>(null)
   const db = useSQLiteContext()
 
-  const createTraining = async (params: useCreateTrainingParams): Promise<{ id: number } | void> => {
+  const createTraining = async (params: CreateTrainingParams): Promise<{ id: number } | void> => {
     const { name, description, exercises } = params
 
     if (!db) {
