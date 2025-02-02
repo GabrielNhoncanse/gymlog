@@ -25,7 +25,7 @@ export async function initDatabase (db: SQLiteDatabase) {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       training_type_id INTEGER NOT NULL,
       start_date TEXT NOT NULL,
-      end_date TEXT NOT NULL,
+      end_date TEXT,
       FOREIGN KEY (training_type_id) REFERENCES training_types(id) ON DELETE CASCADE
     );
   `)
