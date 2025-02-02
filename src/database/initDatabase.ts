@@ -35,12 +35,14 @@ export async function initDatabase (db: SQLiteDatabase) {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       session_id INTEGER NOT NULL,
       exercise_id INTEGER NOT NULL,
+      set_number INTEGER NOT NULL, -- Número da série dentro do exercício
       load REAL NOT NULL,
       repetitions INTEGER NOT NULL,
       rir INTEGER, -- Reps in Reserve
       note TEXT,
       FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE CASCADE,
-      FOREIGN KEY (exercise_id) REFERENCES exercises(id) ON DELETE CASCADE
+      FOREIGN KEY (exercise_id) REFERENCES exercises(id) ON DELETE CASCADE,
+      UNIQUE (session_id, exercise_id, set_number)
     );
   `)
 }
