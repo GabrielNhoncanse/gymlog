@@ -2,17 +2,17 @@ import { useSQLiteContext } from 'expo-sqlite'
 import { useState } from 'react'
 import { Exercise, TrainingType } from '../types'
 
-export type GetTrainingByIdResult = {
+export type GetTrainingDataByIdResult = {
   training: TrainingType
   exercises: Exercise[]
 }
 
-export function useGetTrainingById () {
+export function useGetTrainingDataById () {
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<Error | null>(null)
   const db = useSQLiteContext()
 
-  const getTrainingById = async (id: number): Promise<GetTrainingByIdResult | void> => {
+  const getTrainingDataById = async (id: number): Promise<GetTrainingDataByIdResult | void> => {
     if (!db) {
       setError(new Error('An error occurred while getting the database.'))
       return
@@ -54,5 +54,5 @@ export function useGetTrainingById () {
     }
   }
 
-  return { getTrainingById, loading, error }
+  return { getTrainingDataById, loading, error }
 }

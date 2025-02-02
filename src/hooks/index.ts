@@ -1,3 +1,3 @@
 export * from './useCreateTraining'
-export * from './useGetTrainingById'
+export * from './useGetTrainingDataById'
 export * from './useListTrainings'

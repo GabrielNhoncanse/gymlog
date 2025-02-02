@@ -2,20 +2,20 @@ import { useFocusEffect, useLocalSearchParams } from 'expo-router'
 import { useCallback, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
-import { useGetTrainingById, GetTrainingByIdResult } from '../../../../src/hooks'
+import { useGetTrainingDataById, GetTrainingDataByIdResult } from '../../../../src/hooks'
 import { ExercisesTable } from '../../../../src/components'
 
 export default function EditType () {
   const { id } = useLocalSearchParams()
-  const { getTrainingById } = useGetTrainingById()
+  const { getTrainingDataById } = useGetTrainingDataById()
 
-  const [trainingData, setTrainingData] = useState<GetTrainingByIdResult | null>(null)
+  const [trainingData, setTrainingData] = useState<GetTrainingDataByIdResult | null>(null)
 
   useFocusEffect(
     useCallback(() => {
       const getById = async () => {
         if (!id || Array.isArray(id)) return
-        const trainingData = await getTrainingById(Number(id))
+        const trainingData = await getTrainingDataById(Number(id))
         setTrainingData(trainingData || null)
       }
 
