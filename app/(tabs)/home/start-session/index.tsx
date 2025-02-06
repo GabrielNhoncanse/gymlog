@@ -1,18 +1,22 @@
-import { View } from 'react-native'
+import { ScrollView } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 import { useCallback, useState } from 'react'
-import { GetTrainingDataByIdResult, useAddSession, useGetTrainingDataById, useListTrainings } from '../../../../src/hooks'
+import { GetTrainingDataByIdResult, useAddSession, useEndSession, useGetTrainingDataById, useListTrainings, useSessionContext } from '../../../../src/hooks'
 import { TrainingType } from '../../../../src/types'
-import { useFocusEffect } from 'expo-router'
-import { ExercisesTable } from '../../../../src/components'
+import { router, useFocusEffect } from 'expo-router'
+import { SessionSet } from '../../../../src/components'
+import { Button } from 'react-native-paper'
 
 export default function StartSession () {
   const [trainingTypes, setTrainingTypes] = useState<TrainingType[]>([])
   const [selectedTrainingData, setSelectedTrainingData] = useState<GetTrainingDataByIdResult | null>(null)
   const [sessionId, setSessionId] = useState<number | null>(null)
+
+  const { sessionLogs, updateSessionLog, initSessionLogs } = useSessionContext()
   const { listTrainings } = useListTrainings()
   const { getTrainingDataById } = useGetTrainingDataById()
   const { addSession } = useAddSession()
+  const { endSession } = useEndSession()
 
   useFocusEffect(
     useCallback(() => {
@@ -30,10 +34,21 @@ export default function StartSession () {
 
     const trainingData = await getTrainingDataById(trainingTypeId!) as GetTrainingDataByIdResult
     setSelectedTrainingData(trainingData)
+
+    if (Object.keys(sessionLogs).length === 0) {
+      initSessionLogs(trainingData.exercises)
+    }
   }
 
+  const handleFinishSession = () => {
+    endSession({ sessionId: sessionId! })
+    router.push('/home')
+  }
+
+  const exercises = selectedTrainingData?.exercises
+
   return (
-    <View style={{ padding: 20 }}>
+    <ScrollView style={{ padding: 20 }}>
       <Picker
         selectedValue={selectedTrainingData?.training.id}
         enabled={!sessionId}
@@ -45,9 +60,15 @@ export default function StartSession () {
         ))}
       </Picker>
 
-      {selectedTrainingData?.exercises && selectedTrainingData.exercises.length > 0 && (
-        <ExercisesTable exercises={selectedTrainingData.exercises} />
-      )}
-    </View>
+      {sessionId && exercises && exercises.length > 0 && exercises.map((exercise) => (
+        <SessionSet key={exercise.id} exercise={exercise} onSetChange={updateSessionLog} />
+      ))
+      }
+
+      {sessionId && <Button
+        onPress={handleFinishSession}>
+        Finish session
+      </Button>}
+    </ScrollView>
   )
 }
