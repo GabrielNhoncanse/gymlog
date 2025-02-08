@@ -15,11 +15,13 @@ export function useListSessions () {
 
     const query = `
       SELECT
-        id,
-        training_type_id AS trainingTypeId,
-        start_date AS startDate,
-        end_date AS endDate
-      FROM sessions;
+        s.id,
+        s.training_type_id AS trainingTypeId,
+        s.start_date AS startDate,
+        s.end_date AS endDate,
+        t.name AS trainingName
+      FROM sessions s
+      JOIN training_types t on s.training_type_id = t.id;
     `
 
     setLoading(true)
