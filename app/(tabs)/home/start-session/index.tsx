@@ -1,7 +1,7 @@
 import { ScrollView } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 import { useCallback, useState } from 'react'
-import { GetTrainingDataByIdResult, useAddSession, useEndSession, useGetTrainingDataById, useListTrainings, useSessionContext } from '../../../../src/hooks'
+import { GetTrainingDataByIdResult, useStartSession, useEndSession, useGetTrainingDataById, useListTrainings, useSessionContext } from '../../../../src/hooks'
 import { TrainingType } from '../../../../src/types'
 import { router, useFocusEffect } from 'expo-router'
 import { SessionSet } from '../../../../src/components'
@@ -15,7 +15,7 @@ export default function StartSession () {
   const { sessionLogs, updateSessionLog, initSessionLogs } = useSessionContext()
   const { listTrainings } = useListTrainings()
   const { getTrainingDataById } = useGetTrainingDataById()
-  const { addSession } = useAddSession()
+  const { startSession } = useStartSession()
   const { endSession } = useEndSession()
 
   useFocusEffect(
@@ -29,7 +29,7 @@ export default function StartSession () {
 
   const handleTrainingSelected = async (trainingTypeId: number | null) => {
     if (!trainingTypeId) return
-    const { id: newSessionId } = await addSession({ trainingTypeId }) as { id: number } //TO-DO: improve return
+    const { id: newSessionId } = await startSession({ trainingTypeId }) as { id: number } //TO-DO: improve return
     setSessionId(newSessionId)
 
     const trainingData = await getTrainingDataById(trainingTypeId!) as GetTrainingDataByIdResult

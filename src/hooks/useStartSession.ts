@@ -5,12 +5,12 @@ export type AddSessionParams = {
   trainingTypeId: number
 }
 
-export function useAddSession () {
+export function useStartSession () {
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<Error | null>(null)
   const db = useSQLiteContext()
 
-  const addSession = async (params: AddSessionParams): Promise<{ id: number } | void> => {
+  const startSession = async (params: AddSessionParams): Promise<{ id: number } | void> => {
     const { trainingTypeId } = params
     if (!db) {
       setError(new Error('An error occurred while getting the database.'))
@@ -41,5 +41,5 @@ export function useAddSession () {
     }
   }
 
-  return { addSession, loading, error }
+  return { startSession, loading, error }
 }
