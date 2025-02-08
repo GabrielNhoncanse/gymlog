@@ -1,5 +1,5 @@
 export * from './CreateExerciseForm'
 export * from './ExerciseListCard'
 export * from './ExercisesTable'
+export * from './ListCard'
 export * from './SessionSet'
-export * from './TrainingTypeCard'

@@ -1,11 +1,11 @@
-import { Button } from 'react-native-paper'
+import { Button, Text } from 'react-native-paper'
 import { Ionicons } from '@expo/vector-icons'
 import { router, useFocusEffect } from 'expo-router'
 import { FlatList, View, StyleSheet } from 'react-native'
 import { useCallback, useState } from 'react'
 import { useListTrainings } from '../../../src/hooks'
 import { TrainingType } from '../../../src/types'
-import { TrainingTypeCard } from '../../../src/components'
+import { ListCard } from '../../../src/components'
 
 export default function TrainingTypes () {
   const { listTrainings } = useListTrainings()
@@ -34,7 +34,9 @@ export default function TrainingTypes () {
         numColumns={2}
         columnWrapperStyle={styles.typesContainer}
         renderItem={({ item }) => (
-          <TrainingTypeCard key={item.id} training={item} />
+          <ListCard key={item.id} onPress={() => router.push(`/training-types/edit-type/${item.id}`)}>
+            <Text>{item.name}</Text>
+          </ListCard>
         )}
       />
     </View>
