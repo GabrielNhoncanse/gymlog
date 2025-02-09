@@ -36,40 +36,45 @@ export default function CreateType () {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        label="Name"
-        value={trainingName}
-        onChangeText={(value: string) => setTrainingName(value)}
-      />
+      <View style={styles.content}>
+        <TextInput
+          style={styles.input}
+          label="Name"
+          value={trainingName}
+          onChangeText={(value: string) => setTrainingName(value)}
+        />
 
-      <TextInput
-        style={styles.input}
-        label="Description (optional)"
-        value={trainingDescription}
-        onChangeText={(value: string) => setTrainingDescription(value)}
-      />
+        <TextInput
+          style={styles.input}
+          label="Description (optional)"
+          value={trainingDescription}
+          onChangeText={(value: string) => setTrainingDescription(value)}
+        />
 
-      <View style={{ padding: 16 }}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Text variant='titleLarge'>Exercises</Text>
-          <Button
-            mode='contained'
-            onPress={() => setOpen(true)}
-            contentStyle={{ flexDirection: 'row', alignItems: 'center' }}
-          >
-            Add
-          </Button>
+        <View style={styles.exercisesContainer}>
+          <View style={styles.exercisesHeader}>
+            <Text variant='titleLarge'>Exercises</Text>
+            <Button
+              mode='contained'
+              onPress={() => setOpen(true)}
+              contentStyle={{ flexDirection: 'row', alignItems: 'center' }}
+            >
+              Add
+            </Button>
+          </View>
+
+          <ExercisesTable exercises={exercises} />
         </View>
-
-        <ExercisesTable exercises={exercises} />
       </View>
 
-      <Button
-        onPress={handleCreateClick}
-      >
-        Create
-      </Button>
+      <View style={styles.footer}>
+        <Button
+          mode="contained"
+          onPress={handleCreateClick}
+        >
+          Create
+        </Button>
+      </View>
 
       {open && (
         <CreateExerciseForm
@@ -82,11 +87,26 @@ export default function CreateType () {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 14,
+  },
+  content: {
+    flex: 1,
+    gap: 10,
+  },
   input: {
     backgroundColor: 'transparent',
   },
-  container: {
-    gap: 10,
-    padding: 14
+  exercisesContainer: {
+    padding: 16,
+  },
+  exercisesHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  footer: {
+    alignItems: 'center',
   }
 })
