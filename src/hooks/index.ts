@@ -1,5 +1,6 @@
-export * from './useEndSession'
 export * from './useCreateTraining'
+export * from './useEndSession'
+export * from './useGetSessionLogsBySessionId'
 export * from './useGetTrainingDataById'
 export * from './useListSessions'
 export * from './useListTrainings'
