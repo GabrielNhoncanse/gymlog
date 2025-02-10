@@ -5,4 +5,5 @@ export type SessionLog = {
   repetitions: number
   rir?: number | null
   note?: number | null
+  exerciseId?: number
 }
