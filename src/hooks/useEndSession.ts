@@ -49,10 +49,9 @@ export function useEndSession () {
             log.rir ?? null,
             log.note ?? null
           ])
-
-          await insertSessionLog.finalizeAsync()
         }
       }
+      await insertSessionLog.finalizeAsync()
 
       return
     } catch (error) {
