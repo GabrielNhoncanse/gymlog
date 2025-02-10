@@ -21,7 +21,8 @@ export function useListSessions () {
         s.end_date AS endDate,
         t.name AS trainingName
       FROM sessions s
-      JOIN training_types t on s.training_type_id = t.id;
+      JOIN training_types t on s.training_type_id = t.id
+      ORDER BY start_date DESC;
     `
 
     setLoading(true)
