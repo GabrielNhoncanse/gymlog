@@ -29,7 +29,7 @@ export default function SessionsPage () {
         numColumns={2}
         columnWrapperStyle={styles.typesContainer}
         renderItem={({ item }) => (
-          <ListCard onPress={() => router.push(`sessions/view-session/${item.id}`)}>
+          <ListCard onPress={() => router.push(`sessions/view-session/${item.id}?trainingTypeId=${item.trainingTypeId}`)}>
             <Text>{item.trainingName}</Text>
             <Text>{formatDate(item.startDate)}</Text>
           </ListCard>
