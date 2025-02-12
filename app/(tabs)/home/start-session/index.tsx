@@ -1,10 +1,10 @@
 import { ScrollView } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 import { useCallback, useState } from 'react'
-import { GetTrainingDataByIdResult, useStartSession, useEndSession, useGetTrainingDataById, useListTrainings, useSessionContext } from '../../../../src/hooks'
-import { TrainingType } from '../../../../src/types'
+import { GetTrainingDataByIdResult, useStartSession, useEndSession, useGetTrainingDataById, useListTrainings, useSessionContext, useGetPreviousSessionId, useGetSessionLogsBySessionId, GetSessionLogsBySessionIdResult } from '../../../../src/hooks'
+import { SessionLog, TrainingType } from '../../../../src/types'
 import { router, useFocusEffect } from 'expo-router'
-import { SessionSet } from '../../../../src/components'
+import { SessionSetInputs } from '../../../../src/components'
 import { Button } from 'react-native-paper'
 
 export default function StartSession () {
@@ -17,6 +17,11 @@ export default function StartSession () {
   const { getTrainingDataById } = useGetTrainingDataById()
   const { startSession } = useStartSession()
   const { endSession } = useEndSession()
+
+  const [previousSessionData, setPreviousSessionData] = useState<GetSessionLogsBySessionIdResult | null>(null)
+
+  const { getPreviousSessionId } = useGetPreviousSessionId()
+  const { getSessionLogsBySessionId } = useGetSessionLogsBySessionId()
 
   useFocusEffect(
     useCallback(() => {
@@ -38,6 +43,12 @@ export default function StartSession () {
     if (Object.keys(sessionLogs).length === 0) {
       initSessionLogs(trainingData.exercises)
     }
+
+    const latestSessionId = await getPreviousSessionId(trainingTypeId)
+    if (latestSessionId) {
+      const previousLogs = await getSessionLogsBySessionId(latestSessionId.id)
+      setPreviousSessionData(previousLogs!)
+    }
   }
 
   const handleFinishSession = () => {
@@ -46,6 +57,16 @@ export default function StartSession () {
   }
 
   const exercises = selectedTrainingData?.exercises
+
+  const aggregatedPreviousLogs = previousSessionData?.sessionLogs?.reduce((acc, log) => {
+    if (!acc[log.exerciseId!]) {
+      acc[log.exerciseId!] = []
+    }
+
+    acc[log.exerciseId!].push(log)
+
+    return acc
+  }, {} as Record<number, SessionLog[]>)
 
   return (
     <ScrollView style={{ padding: 20 }}>
@@ -61,7 +82,7 @@ export default function StartSession () {
       </Picker>
 
       {sessionId && exercises && exercises.length > 0 && exercises.map((exercise) => (
-        <SessionSet key={exercise.id} exercise={exercise} onSetChange={updateSessionLog} />
+        <SessionSetInputs key={exercise.id} exercise={exercise} onSetChange={updateSessionLog} previousLogs={aggregatedPreviousLogs ? aggregatedPreviousLogs[exercise.id!] : []} />
       ))
       }
 
