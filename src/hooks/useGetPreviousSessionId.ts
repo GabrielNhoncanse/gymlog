@@ -1,6 +1,11 @@
 import { useSQLiteContext } from 'expo-sqlite'
 import { useState } from 'react'
 
+/**
+ * Hook used to retrieve the most recent completed session for a given training type.
+ * @param trainingTypeId - The Id of the training type to search for.
+ * @returns The Id of the most recent completed session, loading status, and error.
+ */
 export function useGetPreviousSessionId () {
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<Error | null>(null)

@@ -7,6 +7,12 @@ export type GetTrainingDataByIdResult = {
   exercises: Exercise[]
 }
 
+/**
+ * Hook used to retrieve training data and its associated exercises by training Id.
+ * Queries the 'training_types' table for training details and 'exercises' table for related exercises.
+ * @param id - The Id of the training type to retrieve.
+ * @returns The training details, its exercises, loading status, and error.
+ */
 export function useGetTrainingDataById () {
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<Error | null>(null)

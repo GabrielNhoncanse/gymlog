@@ -6,6 +6,12 @@ type AddSessionSetParams = {
   sessionId: number
 }
 
+/**
+ * Hook used to finalize a training session by setting its end date and saving session logs.
+ * Inserts recorded logs into 'session_logs'.
+ * @param params - Object containing the session Id.
+ * @returns A function to end the session, loading status, and error.
+ */
 export function useEndSession () {
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<Error | null>(null)

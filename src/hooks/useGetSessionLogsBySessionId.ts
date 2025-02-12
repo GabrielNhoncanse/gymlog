@@ -6,6 +6,11 @@ export type GetSessionLogsBySessionIdResult = {
   sessionLogs: SessionLog[]
 }
 
+/**
+ * Hook used to retrieve all session logs for a given session ID.
+ * @param id - The Id of the session to retrieve logs for.
+ * @returns An array of session logs, loading status, and error.
+ */
 export function useGetSessionLogsBySessionId () {
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<Error | null>(null)

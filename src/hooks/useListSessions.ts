@@ -2,6 +2,10 @@ import { useSQLiteContext } from 'expo-sqlite'
 import { useState } from 'react'
 import { Session } from '../types'
 
+/**
+ * Hook used to list all sessions.
+ * @returns A list of training sessions, loading status, and error.
+ */
 export function useListSessions () {
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<Error | null>(null)
