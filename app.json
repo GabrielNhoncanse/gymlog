@@ -9,7 +9,7 @@
     "newArchEnabled": true,
     "scheme": "GymLog",
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -20,10 +20,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.gabrielnhoncanse.GymLog"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a99f57ae-c2d4-4d73-a6c5-7118397efb5e"
+      }
     }
   }
 }
