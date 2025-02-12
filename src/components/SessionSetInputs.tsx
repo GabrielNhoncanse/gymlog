@@ -2,12 +2,12 @@ import { View } from 'react-native'
 import { Text, TextInput } from 'react-native-paper'
 import { Exercise } from '../types'
 
-type SessionSetProps = {
+type SessionSetInputsProps = {
   exercise: Exercise
   onSetChange: (exerciseId: number, setNumber: number, field: string, value: string) => void
 }
 
-export function SessionSet (props: SessionSetProps) {
+export function SessionSetInputs (props: SessionSetInputsProps) {
   const { exercise, onSetChange } = props
 
   return (
