@@ -44,8 +44,6 @@ export default function ViewSessionPage () {
     return acc
   }, {} as Record<number, SessionLog[]>)
 
-  console.log(aggregatedLogs)
-
   return (
     <View style={styles.container}>
       <Text variant="titleLarge">{trainingData?.training.name}</Text>
