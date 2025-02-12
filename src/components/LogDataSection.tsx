@@ -13,7 +13,7 @@ export function LogDataSection (props: LogDataTableProps) {
     <View>
 
       {logs.map((log) => (
-        <View>
+        <View key={log.id}>
           <Text style={{ fontWeight: 'bold' }}>Set {log.setNumber}</Text>
 
           <Text>Load: {log.load}</Text>
